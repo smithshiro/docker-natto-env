@@ -1,0 +1,10 @@
+TableName: UserConnection
+AttributeDefinitions:
+  - AttributeName: connectionId
+    AttributeType: S
+KeySchema:
+  - AttributeName: connectionId
+    KeyType: HASH
+ProvisionedThroughput:
+  ReadCapacityUnits: 5
+  WriteCapacityUnits: 5

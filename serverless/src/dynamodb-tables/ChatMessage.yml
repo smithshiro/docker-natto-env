@@ -1,0 +1,14 @@
+TableName: ChatMessage
+AttributeDefinitions:
+  - AttributeName: roomSlug
+    AttributeType: S
+  - AttributeName: requestTime
+    AttributeType: N
+KeySchema:
+  - AttributeName: roomSlug
+    KeyType: HASH
+  - AttributeName: requestTime
+    KeyType: RANGE
+ProvisionedThroughput:
+  ReadCapacityUnits: 5
+  WriteCapacityUnits: 5

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  serverless:
+    build:
+      context: ./docker/serverless
+      args:
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - AWS_REGION=${AWS_REGION}
+    tty: true
+    stdin_open: true
+    env_file:
+      - ./.env
+    depends_on:
+      - dynamodb
+    volumes:
+      - ./serverless/src:/app
+    working_dir: /app
+    ports:
+      - "3334:3000"
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    ports:
+      - "8889:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -optimizeDbBeforeStartup -dbPath ./data"
+    volumes:
+      - ./docker/dynamodb:/home/dynamodblocal/data
+    working_dir: /home/dynamodblocal
